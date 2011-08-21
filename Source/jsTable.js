@@ -13,8 +13,10 @@ var jsTable = new Class({
 		this.tbody = null;
 
 		this.table_id = (Math.random() * 1000).round();
-		this.column_list = [];
+
 		this.data = [];
+		this.column_list = [];
+		this.row_list = []; // maps row_indexes to row_ids
 
 		this._createTable();
 	},
@@ -26,6 +28,10 @@ var jsTable = new Class({
 		}
 
 		return 'jst-' + this.table_id + '-' + column_name + '-' + row_id;
+	},
+
+	_getRowElementId: function(row_id) {
+		return 'jst-' + this.table_id + '-' + row_id;
 	},
 
 	_getColumnIndex: function(column_name){
@@ -85,7 +91,8 @@ var jsTable = new Class({
 	},
 
 	addRow: function() {
-		var new_row = $e('tr');
+		var tr_id = this._getRowElementId(this.data.length);
+		var new_row = $e('tr', {'id': tr_id});
 		var row_data = [];
 
 		for(var i=0; i < arguments.length; i++) {
@@ -105,10 +112,24 @@ var jsTable = new Class({
 		}
 
 		this.tbody.grab(new_row);
+		this.row_list.push(this.data.length);
 		this.data.push(row_data);
+
 	},
 
-	deleteRow: function(row_id) {
+	deleteRow: function(row_index) {
+		var row_data = this.data[row_index];
+		var row_id = this.row_list[row_index];
+		var tr_id = this._getRowElementId(row_id);
+
+		this.row_list.erase(row_id);
+		this.data.erase(row_data);
+		$(tr_id).dispose();
+
+	},
+
+	deleteRowById: function(row_id) {
+		this.deleteRow(this.row_list.indexOf(row_id));
 	},
 
 	getCell: function(row_id, column_id) {

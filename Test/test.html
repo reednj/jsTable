@@ -18,7 +18,9 @@
 
 var Ui = {
 	init: function() {
-		var jst = new jsTable('t1');
+		this.jst = new jsTable('t1');
+		var jst = this.jst;
+
 		jst.addColumn('id', 'id');
 		jst.addColumn('desc', 'Description');
 
@@ -34,6 +36,14 @@ var Ui = {
 		jst.setCell(2, 0, 'TEST2');
 
 		$('t2').innerHTML = jst.toJson();
+	},
+
+	delete_row: function() {
+		this.jst.deleteRow(3);
+	},
+
+	delete_last: function() {
+		this.jst.deleteRow(this.jst.rowCount()-1);
 	}
 }
 
@@ -45,6 +55,11 @@ window.addEvent('load', Ui.init.bind(Ui));
 <body>
 
 <div id='t-body'>
+	<div>
+		<input type='button' value='delete' onclick='Ui.delete_row.bind(Ui)()'>
+		<input type='button' value='delete last' onclick='Ui.delete_last.bind(Ui)()'>
+	</div>
+
 	<div>
 		<span>get cell by name:</span>
 		<span id='r1'> </span>
