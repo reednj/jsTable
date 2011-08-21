@@ -9,6 +9,10 @@ var jsTable = new Class({
 		this.element = $(elem);
 		this.options = options || {};
 
+		this.options.onRowDeleted = this.options.onRowDeleted || $empty;
+		this.options.onRowAdded = this.options.onRowAdded || $empty;
+		this.options.onCellUpdated = this.options.onCellUpdated || $empty;
+
 		this.thead = null;
 		this.tbody = null;
 
@@ -125,6 +129,7 @@ var jsTable = new Class({
 		this.row_list.push(this.data.length);
 		this.data.push(row_data);
 
+		this.options.onRowAdded(this.data.length-1, row_data);
 	},
 
 	deleteRow: function(row_index) {
@@ -135,6 +140,8 @@ var jsTable = new Class({
 		this.row_list.erase(row_id);
 		this.data.erase(row_data);
 		$(tr_id).dispose();
+
+		this.options.onRowDeleted(row_index, row_id);
 
 	},
 
@@ -167,6 +174,8 @@ var jsTable = new Class({
 		}
 
 		this.data[row_id][column_id] = cell_content;
+
+		this.options.onCellUpdated(row_id, column_id, cell_content);
 	},
 
 	toData: function(format) {

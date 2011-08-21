@@ -18,7 +18,11 @@
 
 var Ui = {
 	init: function() {
-		this.jst = new jsTable('t1');
+		this.jst = new jsTable('t1', {
+			'onRowDeleted': this.deleted,
+			'onRowAdded': this.added,
+			'onCellUpdated': this.updated
+		});
 		var jst = this.jst;
 
 		jst.addColumn('id', 'id');
@@ -53,6 +57,18 @@ var Ui = {
 
 	delete_last: function() {
 		this.jst.deleteRow(this.jst.rowCount()-1);
+	},
+
+	deleted: function(row_index) {
+		$('s1').innerHTML = '+'
+	},
+
+	updated: function() {
+		$('s2').innerHTML = '+'
+	},
+
+	added: function() {
+		$('s3').innerHTML = '+'
 	}
 }
 
@@ -72,6 +88,12 @@ window.addEvent('load', Ui.init.bind(Ui));
 	<div>
 		<span>get cell by name:</span>
 		<span id='r1'> </span>
+	</div>
+
+	<div>
+		<span>deletes: </span> <span id='s1'> </span>
+		<span>update: </span> <span id='s2'> </span>
+		<span>adds: </span> <span id='s3'> </span>
 	</div>
 	
 	<div>
