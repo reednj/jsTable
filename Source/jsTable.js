@@ -11,9 +11,28 @@ var jsTable = new Class({
 
 		this.thead = null;
 		this.tbody = null;
+
+		this.table_id = (Math.random() * 1000).round();
 		this.column_list = [];
+		this.data = [];
 
 		this._createTable();
+	},
+
+	
+	_getCellElementId: function(row_id, column_name) {
+		return 'jst-' + this.table_id + '-' + column_name + '-' + row_id;
+	},
+
+	_getColumnIndex: function(column_name){
+
+		for(var i=0; i < this.column_list.length; i++) {
+			if(this.column_list[i].name == column_name) {
+				return i;
+			}
+		}
+
+		return null;
 	},
 
 	// inititialze the table element inside this.element
@@ -28,6 +47,15 @@ var jsTable = new Class({
 			]
 		}).inject(this.element);
 
+	},
+
+	// does not include the head row.
+	rowCount: function() {
+		return this.data.length;
+	},
+
+	columnCount: function() {
+		return this.column_list.length;
 	},
 
 	addColumns: function(columns) {
@@ -48,17 +76,50 @@ var jsTable = new Class({
 
 	addRow: function() {
 		var new_row = $e('tr');
+		var row_data = [];
 
 		for(var i=0; i < arguments.length; i++) {
 			var cell_content = arguments[i];
+			var column_name = this.column_list[i].name;
+			var element_id = this._getCellElementId(this.data.length, column_name);
+
+			// create the cell element
 			$e('td', {
+				'id': element_id,
 				'text': cell_content, 
-				'class':'jst-'+name
+				'class':'jst-' + column_name
 			}).inject(new_row);
+
+			// add to the internal data
+			row_data.push(cell_content);
 		}
 
 		this.tbody.grab(new_row);
+		this.data.push(row_data);
+	},
+
+	deleteRow: function(row_id) {
+	},
+
+	getCell: function(row_id, column_id) {
+		if($type(column_id) == 'string') {
+			// if the column_id has been passed in as a string, assume it is a column_name
+			// so convert to to the column_id
+			column_id = this._getColumnIndex(column_id);
+		}
+
+		return this.data[row_id][column_id];
+	},
+
+	setCell: function(row_id, column_id, cell_content) {
+		if($type(column_id) != 'string') {
+			column_id = this.column_list[column_id].name;
+		}
+
+		this.data[row_id][column_id] = cell_content;
+		$(this._getCellElementId(row_id, column_id)).innerHTML = cell_content;
 	}
+
 });
 
 //

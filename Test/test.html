@@ -26,6 +26,12 @@ var Ui = {
 			var id = (Math.random() * 100).round();
 			jst.addRow(id, 'description-' + id);
 		}
+
+		$('r1').innerHTML = jst.getCell(1, 'desc');
+		$('r2').innerHTML = jst.getCell(1, 1);
+
+		jst.setCell(0, 'desc', 'TEST1');
+		jst.setCell(2, 0, 'TEST2');
 	}
 }
 
@@ -37,6 +43,15 @@ window.addEvent('load', Ui.init.bind(Ui));
 <body>
 
 <div id='t-body'>
+	<div>
+		<span>get cell by name:</span>
+		<span id='r1'> </span>
+	</div>
+	
+	<div>
+		<span>get cell by column_id:</span> 
+		<span id='r2'></span>
+	</div>
 
 	<div id='t1'></div>
 
