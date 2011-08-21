@@ -101,11 +101,21 @@ var jsTable = new Class({
 			var element_id = this._getCellElementId(this.data.length, column_name);
 
 			// create the cell element
-			$e('td', {
+			var new_td = $e('td', {
 				'id': element_id,
-				'text': cell_content, 
 				'class':'jst-' + column_name
-			}).inject(new_row);
+			});
+
+			// insert elements into the table directly.
+			// everything else gets converted to a string and
+			// goes in as innerHTML
+			if($type(cell_content) == 'element') {
+				new_td.grab(cell_content);
+			} else {
+				new_td.innerHTML = cell_content;
+			}
+
+			new_row.grab(new_td);
 
 			// add to the internal data
 			row_data.push(cell_content);
@@ -147,8 +157,16 @@ var jsTable = new Class({
 			column_id = this._getColumnIndex(column_id);
 		}
 
+		var td = $(this._getCellElementId(row_id, column_id));
+
+		if($type(cell_content) == 'element') {
+			td.empty();
+			td.inject(cell_content);
+		} else {
+			td.innerHTML = cell_content;
+		}
+
 		this.data[row_id][column_id] = cell_content;
-		$(this._getCellElementId(row_id, column_id)).innerHTML = cell_content;
 	},
 
 	toData: function(format) {

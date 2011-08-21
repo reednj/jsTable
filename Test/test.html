@@ -23,10 +23,19 @@ var Ui = {
 
 		jst.addColumn('id', 'id');
 		jst.addColumn('desc', 'Description');
+		jst.addColumn('button', 'delete');
 
 		for(i=0; i < 25; i++) {
 			var id = (Math.random() * 100).round();
-			jst.addRow(id, 'description-' + id);
+
+			jst.addRow(
+				id, 
+				'description-' + id,
+				$e('a', {
+					'text':'x',
+					'href':'javascript:null'
+				})
+			);
 		}
 
 		$('r1').innerHTML = jst.getCell(1, 'desc');
@@ -35,7 +44,7 @@ var Ui = {
 		jst.setCell(0, 'desc', 'TEST1');
 		jst.setCell(2, 0, 'TEST2');
 
-		$('t2').innerHTML = jst.toJson();
+		//$('t2').innerHTML = jst.toJson();
 	},
 
 	delete_row: function() {
