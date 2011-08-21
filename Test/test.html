@@ -32,6 +32,8 @@ var Ui = {
 
 		jst.setCell(0, 'desc', 'TEST1');
 		jst.setCell(2, 0, 'TEST2');
+
+		$('t2').innerHTML = jst.toJson();
 	}
 }
 
@@ -54,6 +56,8 @@ window.addEvent('load', Ui.init.bind(Ui));
 	</div>
 
 	<div id='t1'></div>
+
+	<div id='t2'></div>
 
 </div>
 

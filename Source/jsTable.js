@@ -21,6 +21,10 @@ var jsTable = new Class({
 
 	
 	_getCellElementId: function(row_id, column_name) {
+		if($type(column_name) != 'string') {
+			column_name = this.column_list[column_name].name;
+		}
+
 		return 'jst-' + this.table_id + '-' + column_name + '-' + row_id;
 	},
 
@@ -56,6 +60,12 @@ var jsTable = new Class({
 
 	columnCount: function() {
 		return this.column_list.length;
+	},
+
+	// deletes all content, but not the header
+	clear: function() {
+		this.data = [];
+		this.tbody.empty();
 	},
 
 	addColumns: function(columns) {
@@ -112,12 +122,37 @@ var jsTable = new Class({
 	},
 
 	setCell: function(row_id, column_id, cell_content) {
-		if($type(column_id) != 'string') {
-			column_id = this.column_list[column_id].name;
+		if($type(column_id) == 'string') {
+			column_id = this._getColumnIndex(column_id);
 		}
 
 		this.data[row_id][column_id] = cell_content;
 		$(this._getCellElementId(row_id, column_id)).innerHTML = cell_content;
+	},
+
+	toData: function(format) {
+		if(!$defined(format)) {
+			// dump every column of the table to an object.
+			return this.toData(this.column_list.map(function(o) { return o.name; }));
+		} else if($type(format) == 'string') {
+			// assume the string is a column name, return just that column
+			var column_id = this._getColumnIndex(format);
+			return this.data.map(function(row) { return row[column_id]; });
+		} else if($type(format) == 'array') {
+			return this.data.map(function(row) {
+				var new_row = {};
+
+				for(var i=0; i < row.length; i++) {
+					new_row[this.column_list[i].name] = row[i];
+				}
+
+				return new_row;
+			}.bind(this));
+		}
+	},
+
+	toJson: function(format) {
+		return JSON.encode(this.toData(format));
 	}
 
 });
