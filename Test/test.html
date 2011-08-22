@@ -29,7 +29,7 @@ var Ui = {
 		jst.addColumn('desc', 'Description');
 		jst.addColumn('button', 'delete');
 
-		for(i=0; i < 25; i++) {
+		for(i=0; i < 10; i++) {
 			var id = (Math.random() * 100).round();
 
 			jst.addRow(
@@ -48,7 +48,7 @@ var Ui = {
 		jst.setCell(0, 'desc', 'TEST1');
 		jst.setCell(2, 0, 'TEST2');
 
-		//$('t2').innerHTML = jst.toJson();
+		$('t2').innerHTML = jst.toJson();
 	},
 
 	delete_row: function() {

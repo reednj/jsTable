@@ -183,15 +183,25 @@ var jsTable = new Class({
 			// dump every column of the table to an object.
 			return this.toData(this.column_list.map(function(o) { return o.name; }));
 		} else if($type(format) == 'string') {
+
 			// assume the string is a column name, return just that column
 			var column_id = this._getColumnIndex(format);
-			return this.data.map(function(row) { return row[column_id]; });
+			return this.data.map(function(row) {
+				if($type(row[column_id]) != 'element') {
+					return row[column_id];
+				} else {
+					return null;
+				}
+			});
+
 		} else if($type(format) == 'array') {
 			return this.data.map(function(row) {
 				var new_row = {};
 
 				for(var i=0; i < row.length; i++) {
-					new_row[this.column_list[i].name] = row[i];
+					if($type(row[i]) != 'element') {
+						new_row[this.column_list[i].name] = row[i];
+					}
 				}
 
 				return new_row;
