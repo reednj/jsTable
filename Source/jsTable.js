@@ -54,7 +54,7 @@ var jsTable = new Class({
 		this.element.empty();
 
 		$e('table', {
-			'class': 'js-table',
+			'class': 'jst-table',
 			'children':[
 				this.thead = $e('thead', {'children': [$e('tr')]}),
 				this.tbody = $e('tbody')

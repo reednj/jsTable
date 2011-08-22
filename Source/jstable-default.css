@@ -1,0 +1,21 @@
+/*
+ * A nice default theme for jstable.
+ *
+ * Nathan Reed, 2011-08-22
+ */
+
+.jst-table  {
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+}
+
+.jst-table thead th {
+	text-align: left;
+	border-bottom: 1px solid #ccc;
+	padding: 3px 8px;
+}
+
+.jst-table tbody td {
+	text-align: left;
+	padding: 3px 8px;
+}
