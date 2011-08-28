@@ -153,6 +153,15 @@ var jsTable = new Class({
 		this.deleteRow(this.row_list.indexOf(row_id));
 	},
 
+	// aliases for deleteRow. I find remove move natural than delete for some reason.
+	removeRow: function(row_index) {
+		this.deleteRow(row_index);
+	},
+
+	removeRowById: function(row_id) {
+		this.deleteRowById(row_id);
+	},
+
 	getCell: function(row_id, column_id) {
 		if($type(column_id) == 'string') {
 			// if the column_id has been passed in as a string, assume it is a column_name
