@@ -60,6 +60,7 @@
 var Ui = {
 	init: function() {
 		this.create_t1();
+		this.create_t2();
 		this.create_t3();
 	},
 
@@ -74,7 +75,7 @@ var Ui = {
 		}
 	},
 
-	create_t3: function() {
+	create_t2: function() {
 		this.jst2 = new jsTable('t2');
 		this.jst2.addColumn('March');
 		this.jst2.addColumn('April');
@@ -88,6 +89,24 @@ var Ui = {
 			var total = march + april + may;
 
 			this.jst2.addRow('$' + march, '$' + april, '$' + may, '$' + total);
+		}
+	},
+
+	create_t3: function() {
+		this.jst3 = new jsTable('t3');
+		this.jst3.addColumn('number', 'Number');
+		this.jst3.addColumn('button', 'Button');
+
+		for(var i=1; i < 3; i++) {
+			var rc = this.random_cell();
+
+			this.jst3.addRow(rc, $e('input', {
+				'type': 'button',
+				'value': 'show alert',
+				'events': {
+					'click': function() { alert('alert'); }
+				}
+			}));
 		}
 	},
 
@@ -145,6 +164,10 @@ window.addEvent('load', Ui.init.bind(Ui));
 	</div>
 </div>
 
+<div class='desc' style='padding-top: 16px;'>You can add elements to the table as well as text. Just pass the element as an argument to addRow()</div>
+<div class='box'>
+	<div id='t3'></div>
+</div>
 
 </div>
 
