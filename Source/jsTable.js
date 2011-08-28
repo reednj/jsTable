@@ -133,6 +133,10 @@ var jsTable = new Class({
 	},
 
 	deleteRow: function(row_index) {
+		if(row_index < 0 || row_index > this.data.length - 1) {
+			return;
+		}
+
 		var row_data = this.data[row_index];
 		var row_id = this.row_list[row_index];
 		var tr_id = this._getRowElementId(row_id);
