@@ -8,8 +8,8 @@ Demo
 -----
 See [this page](http://popacular.com/jstable/Test/demo.html) for a demo of jsTable in action.
 
-Usage
-------
+How to Use
+----------
 
 (This is only a summary. Please see [the documentation](https://github.com/reednj/jsTable/blob/master/Docs/jsTable.md) for a method by method description of usage)
 

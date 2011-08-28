@@ -1,8 +1,21 @@
 /*
- * jsTable
- *
- * Nathan Reed, 2011-08-13
- */
+---
+description: jsTable - Simple javascript table control
+
+license: MIT-style
+
+authors:
+- Nathan Reed
+
+requires:
+- core/1.2.4: [Class, Event, Element, Selectors, JSON, Request]
+
+provides:
+- jsTable
+- $e
+
+...
+*/
 
 var jsTable = new Class({
 	initialize: function(elem, options) {
@@ -25,7 +38,7 @@ var jsTable = new Class({
 		this._createTable();
 	},
 
-	
+
 	_getCellElementId: function(row_id, column_name) {
 		if($type(column_name) != 'string') {
 			column_name = this.column_list[column_name].name;
@@ -87,9 +100,9 @@ var jsTable = new Class({
 	addColumn: function(name, desc) {
 		name = name || 'none';
 		desc = desc || name;
-		
+
 		this.column_list.push({'name': name, 'description': desc});
-		
+
 		// now create the header element
 		$e('th', {'text': desc, 'class':'jst-'+name}).inject(this.thead.getElement('tr'));
 	},
