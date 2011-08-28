@@ -25,9 +25,13 @@ var jsTable = new Class({
 		this.options.onRowDeleted = this.options.onRowDeleted || $empty;
 		this.options.onRowAdded = this.options.onRowAdded || $empty;
 		this.options.onCellUpdated = this.options.onCellUpdated || $empty;
+		this.options.empty_message = this.options.empty_message || null;
+		this.options.show_header_onempty = this.options.show_header_onempty || false;
 
+		this.table = null;
 		this.thead = null;
 		this.tbody = null;
+		this.empty_tr = null;
 
 		this.table_id = (Math.random() * 1000).round();
 
@@ -66,7 +70,7 @@ var jsTable = new Class({
 	_createTable: function() {
 		this.element.empty();
 
-		$e('table', {
+		this.table = $e('table', {
 			'class': 'jst-table',
 			'children':[
 				this.thead = $e('thead', {'children': [$e('tr')]}),
@@ -74,6 +78,40 @@ var jsTable = new Class({
 			]
 		}).inject(this.element);
 
+		// if the empty message has been set, then create that element as well
+		if(this.options.empty_message != null) {
+			this._createEmptyMessage();
+		}
+
+	},
+
+	_createEmptyMessage: function() {
+		this.empty_tr = $e('div', {'class':'jst-emptymessage', 'text': this.options.empty_message});
+		this.element.grab(this.empty_tr);
+
+		// show we be showing the message or not?
+		this._setEmptyMessageVisibility();
+	},
+
+	_setEmptyMessageVisibility: function() {
+		if(this.empty_tr == null) {
+			return;
+		}
+
+		if(this.data.length > 0 && this.empty_tr.getStyle('display') != 'none') {
+			this.empty_tr.hide();
+
+			if(this.options.show_header_onempty !== true) {
+				this.thead.show();
+			}
+
+		} else if(this.data.length == 0 && this.empty_tr.getStyle('display') != '') {
+			this.empty_tr.show();
+
+			if(this.options.show_header_onempty!== true) {
+				this.thead.hide();
+			}
+		}
 	},
 
 	// does not include the head row.
@@ -89,6 +127,20 @@ var jsTable = new Class({
 	clear: function() {
 		this.data = [];
 		this.tbody.empty();
+	},
+
+	setEmptyMessage: function(empty_message, show_header) {
+		this.options.empty_message = empty_message;
+
+		if($defined(show_header)) {
+			this.options.show_header_onempty = show_header;
+		}
+
+		// if the empty message is not in the page yet, then create the
+		// element and add it to the page.
+		if(!$defined(this.empty_tr)) {
+			this._createEmptyMessage();
+		}
 	},
 
 	addColumns: function(columns) {
@@ -143,6 +195,8 @@ var jsTable = new Class({
 		this.data.push(row_data);
 
 		this.options.onRowAdded(this.data.length-1, row_data);
+
+		this._setEmptyMessageVisibility();
 	},
 
 	deleteRow: function(row_index) {
@@ -160,6 +214,7 @@ var jsTable = new Class({
 
 		this.options.onRowDeleted(row_index, row_id);
 
+		this._setEmptyMessageVisibility();
 	},
 
 	deleteRowById: function(row_id) {
@@ -307,3 +362,9 @@ function $e(tag, props) {
 
    return new_element
 }
+
+// this is now implemented in mootool.more (finally!)
+Element.implement({
+   show: function() {this.setStyle('display','');},
+   hide: function() {this.setStyle('display','none');}
+});

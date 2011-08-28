@@ -15,6 +15,9 @@ jsTable Method: constructor {#InlineEditor:constructor}
 
 ### Options:
 
+* empty_message (string)	-	This message is show when there are no rows in the table. Styled using the class 'jst-emptymessage'
+* show_header_onempty (boolean)	-	should the table header be shown or hidden when the table is empty?
+
 ### Events:
 
 * onRowAdded(row_index, row_data)	- called after each row is added.
@@ -50,6 +53,18 @@ Empties the table. Does not remove the header.
 ### Example:
 	jst.clear();
 
+jsTable Method: setEmptyMessage {#InlineEditor:setEmptyMessage}
+-------------------------------------------------------------
+Set the mesage
+### Syntax:
+	jst.setEmptyMessage(empty_message, show_header)
+
+### Arguments:
+ * empty_message (string) - This message is show when there are no rows in the table. Styled using the class 'jst-emptymessage'
+ * show_header (boolean) - should the table header be shown or hidden when the table is empty?
+
+### Example:
+	jst.setEmptyMessage('table is empty', true);
 
 jsTable Method: addColumn {#InlineEditor:addColumn}
 -------------------------------------------------------------
@@ -68,7 +83,7 @@ empty the results can be unpredictable.
 
 jsTable Method: addColumns {#InlineEditor:addColumns}
 -------------------------------------------------------------
-Add multiple columns. 
+Add multiple columns.
 
 ### Syntax:
 	jst.addColumns(column_list);
@@ -94,10 +109,10 @@ Add a row to the bottom of the table.
 
 ### Example:
 	jst.addRow(
-		'1234', 
-		'Nathan', 
+		'1234',
+		'Nathan',
 		new Element('a', {
-			'href':'?id=1234', 
+			'href':'?id=1234',
 			'text':'profile'
 		})
 	);
@@ -117,7 +132,7 @@ Removes a row from the index provided.
 
 jsTable Method: deleteRowById {#InlineEditor:deleteRowById}
 -------------------------------------------------------------
-Removes a row from the table but by the internal row id, instead of the row index. This is 
+Removes a row from the table but by the internal row id, instead of the row index. This is
 useful for linking to events, as the ids do not change when rows are added or removed.
 
 ### Syntax:
@@ -171,7 +186,7 @@ Serializes the table to a javascript data structure.
 
 ### Example:
 	// returns an array like [12, 25, 36, 47, 58];
-	jst.toData('id'); 
+	jst.toData('id');
 
 	// returns something like [
 		{'id':12, 'firstname':'Nathan'},
@@ -181,7 +196,7 @@ Serializes the table to a javascript data structure.
 		{'id':58, 'firstname':'Samantha'},
 	]
 	//
-	jst.toData('id', 'firstname); 
+	jst.toData('id', 'firstname);
 
 jsTable Method: toJson {#InlineEditor:toJson}
 -------------------------------------------------------------

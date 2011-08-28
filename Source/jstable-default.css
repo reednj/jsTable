@@ -19,3 +19,8 @@
 	text-align: left;
 	padding: 3px 8px;
 }
+
+.jst-emptymessage {
+	text-align: center;
+	font-style: italic;
+}

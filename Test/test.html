@@ -14,8 +14,12 @@
 	margin: 32px;
 }
 
-#t1 table {
+#t1 {
 	width: 500px;
+}
+
+#t1 table {
+	width: 100%;
 }
 
 #t-status {
@@ -42,19 +46,23 @@ var Ui = {
 		this.jst = new jsTable('t1', {
 			'onRowDeleted': this.deleted,
 			'onRowAdded': this.added,
-			'onCellUpdated': this.updated
+			'onCellUpdated': this.updated,
+			'empty_message': 'Click the buttons above to add some rows'
 		});
+
 		var jst = this.jst;
 
 		jst.addColumn('id', 'id');
 		jst.addColumn('desc', 'Description');
 		jst.addColumn('button', 'delete');
 
+		//jst.setEmptyMessage('empty table', true);
+
 		for(i=0; i < 10; i++) {
 			var id = (Math.random() * 100).round();
 
 			jst.addRow(
-				id, 
+				id,
 				'description-' + id,
 				$e('a', {
 					'text':'x',
@@ -74,6 +82,10 @@ var Ui = {
 		// set the status indicator. if we got to this point then all must be good...
 		$('t-status').addClass('status-ok');
 		$('t-status').innerHTML = 'Complete';
+	},
+
+	add_row: function() {
+		this.jst.addRow(this.jst.rowCount(), Math.random(), '');
 	},
 
 	delete_row: function() {
@@ -105,8 +117,8 @@ window.addEvent('load', Ui.init.bind(Ui));
 <body>
 
 <div id='t-body'>
-	
-	
+
+
 	<div id='t-status'>FAIL</div>
 	<div class='clear'></div>
 
@@ -116,6 +128,7 @@ window.addEvent('load', Ui.init.bind(Ui));
 		<div>
 			<input type='button' value='delete' onclick='Ui.delete_row.bind(Ui)()'>
 			<input type='button' value='delete last' onclick='Ui.delete_last.bind(Ui)()'>
+			<input type='button' value='add row' onclick='Ui.add_row.bind(Ui)()'>
 		</div>
 
 		<div>
@@ -128,9 +141,9 @@ window.addEvent('load', Ui.init.bind(Ui));
 			<span>update: </span> <span id='s2'> </span>
 			<span>adds: </span> <span id='s3'> </span>
 		</div>
-		
+
 		<div>
-			<span>get cell by column_id:</span> 
+			<span>get cell by column_id:</span>
 			<span id='r2'></span>
 		</div>
 
