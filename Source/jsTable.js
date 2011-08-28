@@ -127,6 +127,8 @@ var jsTable = new Class({
 	clear: function() {
 		this.data = [];
 		this.tbody.empty();
+
+		return this;
 	},
 
 	setEmptyMessage: function(empty_message, show_header) {
@@ -141,12 +143,16 @@ var jsTable = new Class({
 		if(!$defined(this.empty_tr)) {
 			this._createEmptyMessage();
 		}
+
+		return this;
 	},
 
 	addColumns: function(columns) {
 		columns.each(function(col) {
 			this.addColumn(col.name, col.description);
 		}.bind(this));
+
+		return this;
 	},
 
 	addColumn: function(name, desc) {
@@ -157,6 +163,8 @@ var jsTable = new Class({
 
 		// now create the header element
 		$e('th', {'text': desc, 'class':'jst-'+name}).inject(this.thead.getElement('tr'));
+
+		return this;
 	},
 
 	addRow: function() {
@@ -197,6 +205,8 @@ var jsTable = new Class({
 		this.options.onRowAdded(this.data.length-1, row_data);
 
 		this._setEmptyMessageVisibility();
+
+		return this;
 	},
 
 	deleteRow: function(row_index) {
@@ -215,19 +225,22 @@ var jsTable = new Class({
 		this.options.onRowDeleted(row_index, row_id);
 
 		this._setEmptyMessageVisibility();
+
+		return this;
 	},
 
 	deleteRowById: function(row_id) {
 		this.deleteRow(this.row_list.indexOf(row_id));
+		return this;
 	},
 
 	// aliases for deleteRow. I find remove move natural than delete for some reason.
 	removeRow: function(row_index) {
-		this.deleteRow(row_index);
+		return this.deleteRow(row_index);
 	},
 
 	removeRowById: function(row_id) {
-		this.deleteRowById(row_id);
+		return this.deleteRowById(row_id);
 	},
 
 	getCell: function(row_id, column_id) {
@@ -257,6 +270,8 @@ var jsTable = new Class({
 		this.data[row_id][column_id] = cell_content;
 
 		this.options.onCellUpdated(row_id, column_id, cell_content);
+
+		return this;
 	},
 
 	toData: function(format) {

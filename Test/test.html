@@ -52,9 +52,7 @@ var Ui = {
 
 		var jst = this.jst;
 
-		jst.addColumn('id', 'id');
-		jst.addColumn('desc', 'Description');
-		jst.addColumn('button', 'delete');
+		jst.addColumn('id', 'id').addColumn('desc', 'Description').addColumn('button', 'delete').setEmptyMessage('test', true);
 
 		//jst.setEmptyMessage('empty table', true);
 
@@ -74,8 +72,7 @@ var Ui = {
 		$('r1').innerHTML = jst.getCell(1, 'desc');
 		$('r2').innerHTML = jst.getCell(1, 1);
 
-		jst.setCell(0, 'desc', 'TEST1');
-		jst.setCell(2, 0, 'TEST2');
+		jst.setCell(0, 'desc', 'TEST1').setCell(2, 0, 'TEST2');
 
 		$('t2').innerHTML = jst.toJson();
 
@@ -106,6 +103,10 @@ var Ui = {
 
 	added: function() {
 		$('s3').innerHTML = '+'
+	},
+
+	clear_table: function() {
+		this.jst.clear();
 	}
 }
 
@@ -129,6 +130,7 @@ window.addEvent('load', Ui.init.bind(Ui));
 			<input type='button' value='delete' onclick='Ui.delete_row.bind(Ui)()'>
 			<input type='button' value='delete last' onclick='Ui.delete_last.bind(Ui)()'>
 			<input type='button' value='add row' onclick='Ui.add_row.bind(Ui)()'>
+			<input type='button' value='clear' onclick='Ui.clear_table.bind(Ui)()'>
 		</div>
 
 		<div>
