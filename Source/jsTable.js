@@ -108,7 +108,7 @@ var jsTable = new Class({
 		} else if(this.data.length == 0 && this.empty_tr.getStyle('display') != '') {
 			this.empty_tr.show();
 
-			if(this.options.show_header_onempty!== true) {
+			if(this.options.show_header_onempty !== true) {
 				this.thead.hide();
 			}
 		}
@@ -127,6 +127,8 @@ var jsTable = new Class({
 	clear: function() {
 		this.data = [];
 		this.tbody.empty();
+
+		this._setEmptyMessageVisibility();
 
 		return this;
 	},
