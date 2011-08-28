@@ -64,7 +64,7 @@ var Ui = {
 	},
 
 	create_t1: function() {
-		this.jst = new jsTable('t1');
+		this.jst = new jsTable('t1', {'empty_message': 'Click the link above to add rows'});
 		this.jst.addColumn('ID');
 		this.jst.addColumn('N1');
 		this.jst.addColumn('N2');

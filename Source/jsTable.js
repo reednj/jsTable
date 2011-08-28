@@ -86,7 +86,11 @@ var jsTable = new Class({
 	},
 
 	_createEmptyMessage: function() {
-		this.empty_tr = $e('div', {'class':'jst-emptymessage', 'text': this.options.empty_message});
+		this.empty_tr = $e('div', {
+			'class':'jst-emptymessage',
+			'text': this.options.empty_message
+		});
+
 		this.element.grab(this.empty_tr);
 
 		// show we be showing the message or not?
@@ -103,6 +107,8 @@ var jsTable = new Class({
 
 			if(this.options.show_header_onempty !== true) {
 				this.thead.show();
+			} else {
+				this.thead.show();
 			}
 
 		} else if(this.data.length == 0 && this.empty_tr.getStyle('display') != '') {
@@ -110,6 +116,8 @@ var jsTable = new Class({
 
 			if(this.options.show_header_onempty !== true) {
 				this.thead.hide();
+			} else {
+				this.thead.show();
 			}
 		}
 	},
@@ -144,6 +152,8 @@ var jsTable = new Class({
 		// element and add it to the page.
 		if(!$defined(this.empty_tr)) {
 			this._createEmptyMessage();
+		} else {
+			this.empty_tr.innerHTML = this.options.empty_message;
 		}
 
 		return this;

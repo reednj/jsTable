@@ -52,9 +52,11 @@ var Ui = {
 
 		var jst = this.jst;
 
-		jst.addColumn('id', 'id').addColumn('desc', 'Description').addColumn('button', 'delete').setEmptyMessage('test', true);
+		jst.addColumn('id', 'id').addColumn('desc', 'Description').addColumn('button', 'delete');
 
-		//jst.setEmptyMessage('empty table', true);
+		if(Math.random() > 0.5) {
+			jst.setEmptyMessage('empty table', true);
+		}
 
 		for(i=0; i < 10; i++) {
 			var id = (Math.random() * 100).round();
