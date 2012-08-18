@@ -32,28 +32,28 @@ var jst = new jsTable('some_div', {'onRowDeleted': function() {
 });
 
 
-jsTable Method: rowCount {#InlineEditor:rowCount}
+jsTable Method: rowCount
 -------------------------------------------------------------
 Returns a count of the number of rows currently in the table. Does not include the header.
 
 ### Example:
 	var rc = jst.rowCount();
 
-jsTable Method: columnCount {#InlineEditor:columnCount}
+jsTable Method: columnCount
 -------------------------------------------------------------
 Returns a count of the number of columns in the table.
 
 ### Example:
 	var cc = jst.columnCount();
 
-jsTable Method: clear {#InlineEditor:clear}
+jsTable Method: clear
 -------------------------------------------------------------
 Empties the table. Does not remove the header.
 
 ### Example:
 	jst.clear();
 
-jsTable Method: setEmptyMessage {#InlineEditor:setEmptyMessage}
+jsTable Method: setEmptyMessage
 -------------------------------------------------------------
 Set the mesage
 ### Syntax:
@@ -66,7 +66,7 @@ Set the mesage
 ### Example:
 	jst.setEmptyMessage('table is empty', true);
 
-jsTable Method: addColumn {#InlineEditor:addColumn}
+jsTable Method: addColumn
 -------------------------------------------------------------
 Adds a column to the right of the table. If you call this when the table is not
 empty the results can be unpredictable.
@@ -81,7 +81,7 @@ empty the results can be unpredictable.
 ### Example:
 	jst.addColumn('id', 'Employee ID');
 
-jsTable Method: addColumns {#InlineEditor:addColumns}
+jsTable Method: addColumns
 -------------------------------------------------------------
 Add multiple columns.
 
@@ -98,7 +98,7 @@ Add multiple columns.
 	]);
 
 
-jsTable Method: addRow {#InlineEditor:addRow}
+jsTable Method: addRow
 -------------------------------------------------------------
 Add a row to the bottom of the table.
 
@@ -117,7 +117,7 @@ Add a row to the bottom of the table.
 		})
 	);
 
-jsTable Method: deleteRow {#InlineEditor:deleteRow}
+jsTable Method: deleteRow
 -------------------------------------------------------------
 Removes a row from the index provided.
 
@@ -130,7 +130,7 @@ Removes a row from the index provided.
 ### Example:
 	jst.deleteRow(0); // delete the first row in the table
 
-jsTable Method: deleteRowById {#InlineEditor:deleteRowById}
+jsTable Method: deleteRowById
 -------------------------------------------------------------
 Removes a row from the table but by the internal row id, instead of the row index. This is
 useful for linking to events, as the ids do not change when rows are added or removed.
@@ -144,7 +144,7 @@ useful for linking to events, as the ids do not change when rows are added or re
 ### Example:
 	jst.deleteRowById(23); // remove the row with id 23.
 
-jsTable Method: getCell {#InlineEditor:getCell}
+jsTable Method: getCell
 -------------------------------------------------------------
 Returns the contents of the cell at the given row and column. The column_id can be an index, or the column name used when the column was added.
 
@@ -158,7 +158,7 @@ Returns the contents of the cell at the given row and column. The column_id can 
 ### Example:
 	var employee_id = jst.getCell(12, 'id');
 
-jsTable Method: setCell {#InlineEditor:setCell}
+jsTable Method: setCell
 -------------------------------------------------------------
 Set the content of the cell. You should always set the cell through this function, not directly
 through the DOm.
@@ -174,7 +174,7 @@ through the DOm.
 ### Example:
 	jst.setCell(12, 'name', 'New Name');
 
-jsTable Method: toData {#InlineEditor:toData}
+jsTable Method: toData
 -------------------------------------------------------------
 Serializes the table to a javascript data structure.
 
