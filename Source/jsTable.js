@@ -274,7 +274,7 @@ var jsTable = new Class({
 
 		if($type(cell_content) == 'element') {
 			td.empty();
-			td.inject(cell_content);
+			td.grab(cell_content);
 		} else {
 			td.innerHTML = cell_content;
 		}
