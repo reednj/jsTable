@@ -100,7 +100,7 @@ Such a class would look something like this:
 	var FileTable = new Class({
 		Extends: jsTable,
 		initialize: function(element, options) {
-
+			this.parent(element, options);
 			this.addColumn('filename', 'File Name');
 			this.addColumn('size');
 
