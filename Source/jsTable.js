@@ -349,45 +349,51 @@ var jsTable = new Class({
 // License: MIT-Style License
 // Nathan Reed (c) 2010
 //
-function $e(tag, props) {
-   tag = tag || 'div';
+if(typeof $e == 'undefined') {
+    var $e = function(tag, options) {
+       tag = tag || 'div';
 
-   if(!$defined(props)) {
-      return new Element(tag);
-   }
+       if(!options) {
+          return new Element(tag);
+       }
 
-   // normalize the properties element for the
-   // mootools element constructor
-   if($type(props) == 'string') {
-      props = {'text': props};
-   } else if($type(props) == 'element') {
-      props = {'children': props};
-   }
+       // normalize the properties element for the
+       // mootools element constructor
+       if(typeOf(options) == 'string') {
+          options = {'text': options};
+       } else if(typeOf(options) == 'element') {
+          options = {'children': [options]};
+       } else if(typeOf(options) == 'array') {
+          options = {'children': options};
+       }
 
-   // remove the children property from the array, we don't want it in there.
-   // because when we pass these properties to the mootools element function it
-   // might get confused.
-   var children = props.children;
-   props.children = null;
+       // remove the children property from the array, we don't want it in there.
+       // because when we pass these properties to the mootools element function it
+       // might get confused.
+       var children = options.children;
+       options.children = null;
 
-   var new_element = new Element(tag, props);
+       var newElement = new Element(tag, options);
 
-   if($defined(children)) {
+       if(children) {
 
-      if($type(children) == 'element') {
-         // if they have just passed through one child, then
-         // normalize it by turning it into an array with one element.
-         children = [children];
-      }
+          if(typeOf(children) == 'element') {
+             // if they have just passed through one child, then
+             // normalize it by turning it into an array with one element.
+             children = [children];
+          }
 
-      // add the children to the new element one by one
-      children.each(function(item) {
-         new_element.grab(item);
-      });
+          // add the children to the new element one by one
+          children.each(function(elem) {
+			if(typeOf(elem) == 'element') {
+				newElement.grab(elem);
+			 }
+          });
 
-   }
+       }
 
-   return new_element
+       return newElement
+    }
 }
 
 // this is now implemented in mootool.more (finally!)
